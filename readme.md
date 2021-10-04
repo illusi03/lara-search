@@ -35,7 +35,7 @@ if you want to, add the facade for convenience
 Use the trait in your model 
 
 ```php
-use Illusi03\LaraSearchTraits\LaraSearchable;
+use Illusi03\LaraSearch\Traits\LaraSearchable;
 
 class Model extends Eloquent {
 
