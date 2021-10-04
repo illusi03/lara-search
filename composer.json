@@ -1,0 +1,28 @@
+{
+    "name": "illusi03/lara-search",
+    "description": "Advanced model and relationships search for Laravel",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Henry Alvarez",
+            "email": "lhumanizado@gmail.com"
+        },
+        {
+            "name": "Rubén González",
+            "email": "rubenx_360@hotmail.com"
+        },
+        {
+            "name": "Bambang M. Azhari",
+            "email": "mohammad.azhari12@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "laravel/framework": ">=4.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Illusi03\\LaraSearch\\": "src"
+        }
+    }
+}
