@@ -23,40 +23,33 @@ class LaraSearch
         // Remove special characters and split the search
         $cleanSearch = preg_replace('/[^ \w]+/', ' ', $search);
         $cleanSearch = str_replace('  ', ' ', $cleanSearch);
-        $splitSearch = explode(' ', $cleanSearch);
-
-        $results = $builder->where(function ($query) use ($splitSearch, $searchSchema) {
-            // Deep search every word in every field
-            self::LaraSearch($query, $splitSearch, [$searchSchema]);
+        $results = $builder->where(function ($query) use ($cleanSearch, $searchSchema) {
+            self::LaraSearch($query, $cleanSearch, [$searchSchema]);
         });
-
         return $results;
     }
 
-    private static function LaraSearch($query, $splitSearch, $currentLevel)
+    private static function LaraSearch($query, $searchTerm, $currentLevel)
     {
+        // For other DB
+        // $query->orWhere($attribute, 'ILIKE', "%{$searchTerm}%");
         foreach ($currentLevel as $model) {
             foreach ($model['fields'] as $field) {
-
                 if (!isset($model['relationship'])) {
-                    foreach ($splitSearch as $word) {
-                        if (!$query) {
-                            $query->where($field, 'like', '%' . $word . '%');
-                        } else {
-                            $query->orWhere($field, 'like', '%' . $word . '%');
-                        }
+                    $searchTerm = strtolower($searchTerm);
+                    if (!$query) {
+                        $query->where(DB::raw("lower($field)"), "like", "%" . $searchTerm . "%");
+                    } else {
+                        $query->orWhere(DB::raw("lower($field)"), "like", "%" . $searchTerm . "%");
                     }
                 } else {
-                    $query->orWhereHas($model['relationship'], function ($relQuery) use ($splitSearch, $field) {
-                        foreach ($splitSearch as $word) {
-                            $relQuery->where($field, 'like', '%' . $word . '%');
-                        }
+                    $query->orWhereHas($model['relationship'], function ($relQuery) use ($searchTerm, $field) {
+                        $relQuery->where(DB::raw("lower($field)"), "like", "%" . $searchTerm . "%");
                     });
                 }
             }
-
             if (isset($model['relationships'])) {
-                self::LaraSearch($query, $splitSearch, $model['relationships']);
+                self::LaraSearch($query, $searchTerm, $model['relationships']);
             }
         }
         return $query;
