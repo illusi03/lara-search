@@ -24,12 +24,12 @@ class LaraSearch
         $cleanSearch = preg_replace('/[^ \w]+/', ' ', $search);
         $cleanSearch = str_replace('  ', ' ', $cleanSearch);
         $results = $builder->where(function ($query) use ($cleanSearch, $searchSchema) {
-            self::LaraSearch($query, $cleanSearch, [$searchSchema]);
+            self::laraSearch($query, $cleanSearch, [$searchSchema]);
         });
         return $results;
     }
 
-    private static function LaraSearch($query, $searchTerm, $currentLevel)
+    private static function laraSearch($query, $searchTerm, $currentLevel)
     {
         // For other DB
         // $query->orWhere($attribute, 'ILIKE', "%{$searchTerm}%");
@@ -49,7 +49,7 @@ class LaraSearch
                 }
             }
             if (isset($model['relationships'])) {
-                self::LaraSearch($query, $searchTerm, $model['relationships']);
+                self::laraSearch($query, $searchTerm, $model['relationships']);
             }
         }
         return $query;

@@ -52,7 +52,7 @@ The LaraSearch() method will bring back your search results. It takes 3 argument
 * __$relationFields__ an associative array with the relations of the main model and their fields you want to search in
 
 ```php
-$posts = Post::LaraSearch($userInput, ['title'], [
+$posts = Post::laraSearch($userInput, ['title'], [
     'comments' => 'comment',
     'comments.user' => ['name', 'lastname']
 ])->get();
@@ -87,7 +87,7 @@ $searchSchema = [
 The LaraSearch() and find() methods return a query, so you need to bring the results by yourself using get() or paginate(n) and even chaining other methods. Following the example above we get:
 
 ```php
-$search = LaraSearch::find($userInput, App\Post::query(), $searchSchema)->where('active', 1)->paginate(10);
+$search = LaraSearch::find($userInput, App\Models\Post::query(), $searchSchema)->where('active', 1)->paginate(10);
 ```
 
 ## Authors
