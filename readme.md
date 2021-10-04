@@ -19,7 +19,7 @@ Require the package in your composer.json and update composer to download the pa
 After that, add the ServiceProvider to the providers array in config/app.php
 
 ```php
-Illusi03\LaraSearchServiceProvider::class,
+Illusi03\LaraSearch\ServiceProvider::class,
 ```
 
 if you want to, add the facade for convenience
