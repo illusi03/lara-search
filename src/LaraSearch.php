@@ -2,6 +2,8 @@
 
 namespace Illusi03\LaraSearch;
 
+use Illuminate\Support\Facades\DB;
+
 /**
  * Advanced model and relationships search for Laravel
  *
